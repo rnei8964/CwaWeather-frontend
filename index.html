@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>森森天氣</title>
+    <title>動森居民出遊玩</title>
     <link rel="icon" type="image/png" href="./icon-v2.png">
     <link rel="apple-touch-icon" href="./icon-v2.png">
     <link rel="apple-touch-icon" sizes="180x180" href="./icon-v2.png">
@@ -14,15 +14,16 @@
         rel="stylesheet">
 
     <style>
+        /* 全新秋日暖色系 */
         :root {
-            --ac-green: #7DE1A9;
-            --ac-bg-pattern: #8FD8AF;
-            --ac-cream: #FFFEF2;
-            --ac-yellow: #F9F195;
-            --ac-brown: #796452;
-            --ac-blue: #4FB5D9;
-            --ac-dark: #58504A;
-            --ac-card-border: #E6E0C8;
+            --ac-main: #E6A77E; /* 主色：柔和秋日橙 */
+            --ac-bg-pattern: #F0E5D0; /* 背景斜紋色：暖米白 */
+            --ac-cream: #FFFEF2; /* 卡片底色：奶油白 */
+            --ac-yellow: #F9E595; /* 標籤黃色：略微降低飽和度 */
+            --ac-brown: #796452; /* 深棕色 */
+            --ac-red: #D0524F; /* 點綴色：楓葉紅 */
+            --ac-dark: #58504A; /* 文字深色 */
+            --ac-card-border: #E6E0C8; /* 卡片分隔線 */
         }
 
         * {
@@ -34,7 +35,7 @@
 
         body {
             font-family: 'Zen Maru Gothic', sans-serif;
-            background-color: var(--ac-green);
+            background-color: var(--ac-main);
             /* 更細緻的斜紋背景 */
             background-image:
                 repeating-linear-gradient(45deg, transparent, transparent 20px, rgba(255, 255, 255, 0.2) 20px, rgba(255, 255, 255, 0.2) 40px);
@@ -103,7 +104,7 @@
             top: -15px;
             left: 50%;
             transform: translateX(-50%);
-            background: var(--ac-blue);
+            background: var(--ac-red); /* 楓葉紅點綴 */
             color: white;
             padding: 5px 20px;
             border-radius: 20px;
@@ -152,23 +153,24 @@
             font-weight: bold;
         }
 
-        /* === 上班族最愛的：快速建議區 === */
+        /* === 上班族最愛的：快速建議區 (調整顏色和邊框) === */
         .advice-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 15px;
             margin-top: 20px;
             padding-top: 20px;
-            border-top: 2px dashed #E0D8C0;
+            border-top: 2px dashed var(--ac-brown); /* 虛線顏色改深 */
         }
 
         .advice-item {
             display: flex;
             flex-direction: column;
             align-items: center;
-            background: rgba(255, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.7); /* 略微加強背景白度 */
             padding: 10px;
             border-radius: 20px;
+            border: 1px solid var(--ac-card-border); /* 新增淺邊框 */
         }
 
         .advice-icon {
@@ -179,12 +181,12 @@
         .advice-text {
             font-size: 1.4rem;
             font-weight: 900;
-            color: var(--ac-brown);
+            color: var(--ac-dark); /* 改為深色，更清晰 */
             margin: 5px 0;
             line-height: 1.2;
         }
 
-        /* === 稍後預報：橫向滑動區 === */
+        /* === 稍後預報：橫向滑動區 (調整顏色) === */
         .section-title {
             font-size: 1.2rem;
             color: white;
@@ -220,7 +222,7 @@
         }
 
         .mini-time {
-            background: var(--ac-green);
+            background: var(--ac-main); /* 小卡時間背景改為秋日橙 */
             color: white;
             padding: 3px 10px;
             border-radius: 10px;
@@ -248,7 +250,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: var(--ac-green);
+            background: var(--ac-main); /* Loading 背景改為秋日橙 */
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -260,8 +262,7 @@
 
 <body>
     <div id="loading" class="loading-screen">
-        <div style="font-size: 4rem; animation: bounce 2s infinite;">☁️</div>
-        <p style="color: white; font-weight: bold; margin-top: 20px;">正在觀測雲的流動...</p>
+        <div style="font-size: 4rem; animation: bounce 2s infinite;">🍁</div> <p style="color: white; font-weight: bold; margin-top: 20px;">狸克正在準備你的船票...</p>
     </div>
     <div class="status-bar">
         <div class="location-pill">📍 臺北市</div>
@@ -292,22 +293,23 @@
             return "🌤️";
         }
 
+        // *** 2. 遊玩主題的建議語句調整 ***
         function getAdvice(rainProb, maxTemp) {
-            let rainIcon = "🌂";
-            let rainText = "不用帶傘，輕便出門";
+            let rainIcon = "🏞️";
+            let rainText = "適合散步，輕裝上陣！";
             if (parseInt(rainProb) > 30) {
-                rainIcon = "☂️";
-                rainText = "記得帶傘！";
+                rainIcon = "☔"; // 換成實心傘，更實用感
+                rainText = "帶傘備用，別讓雨掃興！";
             }
 
             let clothIcon = "👕";
-            let clothText = "舒適穿搭";
+            let clothText = "舒適百搭，盡情遊玩";
             if (parseInt(maxTemp) >= 28) {
-                clothIcon = "🎽";
-                clothText = "短袖出發";
+                clothIcon = "😎"; // 換成墨鏡，更輕鬆感
+                clothText = "短袖涼快，別忘了防曬";
             } else if (parseInt(maxTemp) <= 20) {
-                clothIcon = "🧥";
-                clothText = "加件外套";
+                clothIcon = "🧣"; // 換成圍巾，更溫暖感
+                clothText = "帶件保暖，防範日夜溫差";
             }
 
             return { rainIcon, rainText, clothIcon, clothText };
@@ -334,12 +336,11 @@
 
             document.getElementById('heroCard').innerHTML = `
                         <div class="hero-card">
-                            <div class="hero-period">${period}</div>
-                            <div class="hero-temp-container">
+                            <div class="hero-period">${period}探險中</div> <div class="hero-temp-container">
                                 <div class="hero-icon">${getWeatherIcon(current.weather)}</div>
                                 <div class="hero-temp">${avgTemp}°</div>
                             </div>
-                            <div class="hero-desc">${current.weather}</div>
+                            <div class="hero-desc">今日：${current.weather}</div>
                             
                             <div class="advice-grid">
                                 <div class="advice-item">
@@ -373,12 +374,12 @@
                 }
 
                 scrollContainer.innerHTML += `
-                            <div class="mini-card">
-                                <div class="mini-time">${p}</div>
-                                <div class="mini-icon">${getWeatherIcon(f.weather)}</div>
-                                <div class="mini-temp">${f.minTemp}° - ${f.maxTemp}°</div>
-                                <div style="font-size:0.8rem; color:#888; margin-top:5px;">💧${f.rain}</div>
-                            </div>
+                                <div class="mini-card">
+                                    <div class="mini-time">${p}</div>
+                                    <div class="mini-icon">${getWeatherIcon(f.weather)}</div>
+                                    <div class="mini-temp">${f.minTemp}° - ${f.maxTemp}°</div>
+                                    <div style="font-size:0.8rem; color:#888; margin-top:5px;">💧${f.rain}</div>
+                                </div>
                         `;
             });
 
